@@ -1,0 +1,84 @@
+Prerequisite: 
+(a) Must have anaconda installed on your system.
+(b) Must have tensorflow and corresponding libraries installed on your system.
+
+
+Important Steps:
+
+(a) Go to your C: directory and create a folder named MWeapon(change this name to anything you want but remain consistent with that) ...
+
+(b) Go to your anaconda prompt and inside C:> type below command ...... 
+C:\>set PYTHONPATH="C:\MWeapon\models;C:\MWeapon\models\research;C:\MWeapon\models\research\slim,C:\MWeapon\bin"
+
+(1)  Download the full TensorFlow object detection repository located at https://github.com/tensorflow/models by clicking the “Clone or Download” button and downloading the zip file.
+After extracting the files rename "models-master" to "models".
+
+(2) Compile all the protos file. 
+C:\MWeapon\bin\protoc --python_out=. .\object_detection\protos\anchor_generator.proto
+protoc --python_out=. .\object_detection\protos\anchor_generator.proto .\object_detection\protos\argmax_matcher.proto .\object_detection\protos\bipartite_matcher.proto .\object_detection\protos\box_coder.proto .\object_detection\protos\box_predictor.proto .\object_detection\protos\eval.proto .\object_detection\protos\faster_rcnn.proto .\object_detection\protos\faster_rcnn_box_coder.proto .\object_detection\protos\grid_anchor_generator.proto .\object_detection\protos\hyperparams.proto .\object_detection\protos\image_resizer.proto .\object_detection\protos\input_reader.proto .\object_detection\protos\losses.proto .\object_detection\protos\matcher.proto .\object_detection\protos\mean_stddev_box_coder.proto .\object_detection\protos\model.proto .\object_detection\protos\optimizer.proto .\object_detection\protos\pipeline.proto .\object_detection\protos\post_processing.proto .\object_detection\protos\preprocessor.proto .\object_detection\protos\region_similarity_calculator.proto .\object_detection\protos\square_box_coder.proto .\object_detection\protos\ssd.proto .\object_detection\protos\ssd_anchor_generator.proto .\object_detection\protos\string_int_label_map.proto .\object_detection\protos\train.proto .\object_detection\protos\keypoint_box_coder.proto .\object_detection\protos\multiscale_anchor_generator.proto .\object_detection\protos\graph_rewriter.proto
+
+(3) Copy faster_rcnn_ssd,training,data,images,generate_tfrecord,xml_to_csv in models/research/object_detection
+	
+(4) Go to models/research directory and run > python setup.py build
+>python setup.py install
+ These are used to actually install the object_detection model on your system .
+
+(5) Now check everything's working fine. Go to models/research/object_detection and run
+
+	jupyter notebook object_detection_tutorial.ipynb
+
+
+(6) 
+ ---> Generate csv files by running xml_to_csv.py in object_detection folder.
+ ---> Generate the train and test tf_record file 
+
+	Go to generate_tfrecord.py and in class_text_to_int() function 
+	specify your row_labels i.e, the number of classes you have.
+
+python generate_tfrecord.py --csv_input=images\train_labels.csv --image_dir=images\train --output_path=train.record
+python generate_tfrecord.py --csv_input=images\test_labels.csv --image_dir=images\test --output_path=test.record
+
+(7) Create labelmap and configure training
+The label map tells the trainer what each object is by defining a mapping of class names to class ID numbers. Use a text editor to create a new file and save it as labelmap.pbtxt in the C:\tensorflow1\models\research\object_detection\training folder. 
+
+Configure Training:
+
+Navigate to C:\object_detection\models\research\object_detection\samples\configs and copy the faster_rcnn_inception_v2_pets.config file into 
+the \object_detection\training directory.
+	
+Note: (1) The paths must be entered with single forward slashes (NOT backslashes), or TensorFlow will give a file path error when trying to train the model! Also, the paths must be in double quotation marks ( " ), not single quotation marks ( ' ).
+      (2) The line number can vary by 1 or 2.(maybe more)
+
+(a) Line 9. Change num_classes to the number of different objects you want the classifier to detect. For the above basketball, shirt, and shoe detector, it would be num_classes : 3 .
+
+(b) Line 110. Change fine_tune_checkpoint to:
+
+fine_tune_checkpoint : "C:/object_detection/models/research/object_detection/faster_rcnn_inception_v2_coco_2018_01_28/model.ckpt"
+Lines 126 and 128. In the train_input_reader section, change input_path and label_map_path to:
+
+(c) input_path : "C:/object_detection/models/research/object_detection/train.record"
+label_map_path: "C:/object_detection/models/research/object_detection/training/labelmap.pbtxt"
+
+(d) Line 132. Change num_examples to the number of images you have in the \images\test directory.
+
+(e) Lines 134 and 137. In the eval_input_reader section, change input_path and label_map_path to:
+
+(f) input_path : "C:/object_detection/models/research/object_detection/test.record"
+label_map_path: "C:/object_detection/models/research/object_detection/training/labelmap.pbtxt"
+Save the file after the changes have been made. That’s it! The training job is all configured and ready to go!
+
+(g) under eval_config change num_examples to the number of test images you have.
+
+(8) python legacy/train.py --logtostderr --train_dir=training/ --pipeline_config_path=training/faster_rcnn_inception_v2_pets.config
+  
+	if training shows "no module names nets" then type--  [ set PYTHONPATH="C:\MWeapon\models\research\slim" ] excluding square brackets.
+
+(9) Now that training is complete, the last step is to generate the frozen inference graph (.pb file). From the \object_detection folder, issue the following command, where “XXXX” in “model.ckpt-XXXX” should be replaced with the highest-numbered .ckpt file in the training folder:
+
+python export_inference_graph.py --input_type image_tensor --pipeline_config_path training/faster_rcnn_inception_v2_pets.config --trained_checkpoint_prefix training/model.ckpt-XXXX --output_directory inference_graph
+Find model.ckpt-XXXX.meta under "training" folder and replace XXXX by latest model.ckpt-(max_value).meta.
+
+(10) For running your model go to object_detection folder and run "Object_detection_video.py" or "Object_detection_image.py"
+Don't forget to update the path for images and videos as VIDEO_NAME="Path to video" under Object_detection_video.py
+
+NOTE: Whenever you want to train your model again ..... you'll have to do the steps (b) and 4.
