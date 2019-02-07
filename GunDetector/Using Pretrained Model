@@ -14,6 +14,7 @@ if you are having an error , then specify the explicit path to protoc i.e, repla
 protoc. e.g: (C:/MWeapon/bin/protoc) 
 
 (5) Now go to given google drive link and download 4 files ..
+      https://drive.google.com/open?id=1hfCql15CAGWT8zWF8vNWB8rfeRXgtdEl
       (a) training
       (b) inference_graph
       (c) train
