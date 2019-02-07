@@ -2,6 +2,8 @@
 
 <h2> References </h2>
 <ul>
-  <li> Edje Electronics (Evan) https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10 </li>
-  <li> Dat Tran / racoon_datasets  https://github.com/datitran/raccoon_dataset</li>
+  <li> Edje Electronics (Evan)  </li>
+  https://github.com/EdjeElectronics/TensorFlow-Object-Detection-API-Tutorial-Train-Multiple-Objects-Windows-10
+  <li> Dat Tran / racoon_datasets </li>
+   https://github.com/datitran/raccoon_dataset
  </ul>
