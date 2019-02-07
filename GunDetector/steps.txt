@@ -5,7 +5,7 @@ Prerequisite:
 
 Important Steps:
 (a) Download train and test images from given drive link and save it to the images directory alongwith train and test_labels.
-
+	https://drive.google.com/open?id=1I6zUe-0jet_SmkDStbQ_4ovKVpDcGODm
 	
 (b) Go to your C: directory and create a folder named MWeapon(change this name to anything you want but remain consistent with that) ...
 
