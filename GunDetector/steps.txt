@@ -4,13 +4,15 @@ Prerequisite:
 
 
 Important Steps:
+(a) Download train and test images from given drive link and save it to the images directory alongwith train and test_labels.
 
-(a) Go to your C: directory and create a folder named MWeapon(change this name to anything you want but remain consistent with that) ...
+	
+(b) Go to your C: directory and create a folder named MWeapon(change this name to anything you want but remain consistent with that) ...
 
-(b) Go to your anaconda prompt and inside C:> type below command ...... 
+(c) Go to your anaconda prompt and inside C:> type below command ...... 
 C:\>set PYTHONPATH="C:\MWeapon\models;C:\MWeapon\models\research;C:\MWeapon\models\research\slim,C:\MWeapon\bin"
 
-(1)  Download the full TensorFlow object detection repository located at https://github.com/tensorflow/models by clicking the ìClone or Downloadî button and downloading the zip file.
+(1)  Download the full TensorFlow object detection repository located at https://github.com/tensorflow/models by clicking the ‚ÄúClone or Download‚Äù button and downloading the zip file.
 After extracting the files rename "models-master" to "models".
 
 (2) Compile all the protos file. 
@@ -65,7 +67,7 @@ label_map_path: "C:/object_detection/models/research/object_detection/training/l
 
 (f) input_path : "C:/object_detection/models/research/object_detection/test.record"
 label_map_path: "C:/object_detection/models/research/object_detection/training/labelmap.pbtxt"
-Save the file after the changes have been made. Thatís it! The training job is all configured and ready to go!
+Save the file after the changes have been made. That‚Äôs it! The training job is all configured and ready to go!
 
 (g) under eval_config change num_examples to the number of test images you have.
 
@@ -73,7 +75,7 @@ Save the file after the changes have been made. Thatís it! The training job is a
   
 	if training shows "no module names nets" then type--  [ set PYTHONPATH="C:\MWeapon\models\research\slim" ] excluding square brackets.
 
-(9) Now that training is complete, the last step is to generate the frozen inference graph (.pb file). From the \object_detection folder, issue the following command, where ìXXXXî in ìmodel.ckpt-XXXXî should be replaced with the highest-numbered .ckpt file in the training folder:
+(9) Now that training is complete, the last step is to generate the frozen inference graph (.pb file). From the \object_detection folder, issue the following command, where ‚ÄúXXXX‚Äù in ‚Äúmodel.ckpt-XXXX‚Äù should be replaced with the highest-numbered .ckpt file in the training folder:
 
 python export_inference_graph.py --input_type image_tensor --pipeline_config_path training/faster_rcnn_inception_v2_pets.config --trained_checkpoint_prefix training/model.ckpt-XXXX --output_directory inference_graph
 Find model.ckpt-XXXX.meta under "training" folder and replace XXXX by latest model.ckpt-(max_value).meta.
