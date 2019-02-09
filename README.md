@@ -36,6 +36,10 @@ directory that you have downloaded in step1.
 run the pretrained model and specify the path in case of image and video. If you want to use webcam then run 
 Object_detection_webcam.py .
 
+<h2> From Scratch </h2>
+<p> If you want to train your model from very scratch then download train and test images from given drive link and save it to the images directory alongwith train and test_labels. Then follow the steps mentioned in steps.txt inside GunDetector folder or follow Edje as mentioned in references.
+	https://drive.google.com/open?id=1I6zUe-0jet_SmkDStbQ_4ovKVpDcGODm 
+
 <h2> References </h2>
 <ul>
   <li> Edje Electronics (Evan)  </li>
